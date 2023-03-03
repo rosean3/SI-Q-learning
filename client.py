@@ -27,7 +27,7 @@ def load_empty_table():
     return table
 
 #aplcia a função de Q_learning e atualiza na tabela
-def update_table(reward, prev_s, prev_a, curr_s, learning_rate = 0.2, discount = 0.7):
+def update_table(reward, prev_s, prev_a, curr_s, learning_rate = 0.2, discount = 0.9):
     bellman = reward + discount * max(Q_TABLE[curr_s])
 
     Q_TABLE[prev_s][prev_a] += learning_rate * (bellman - Q_TABLE[prev_s][prev_a])
