@@ -3,6 +3,7 @@ import random
 import connection as cn
 
 ACTIONS = ['left','right','jump']
+DIRECTIONS = ['north','east','south','west']
 Q_TABLE = None
 
 def save_table(location, table):
@@ -13,8 +14,10 @@ def load_table(location):
         with open(location) as file:
             table = numpy.loadtxt(file)
     except FileNotFoundError:
+        print("Arquivo não encontrado, criando uma tabela vazia")
         table = load_empty_table()
 
+    print("table: ", table[0])
     return table
 
 def load_empty_table():
@@ -24,7 +27,7 @@ def load_empty_table():
     return table
 
 #aplcia a função de Q_learning e atualiza na tabela
-def update_table(reward, prev_s, prev_a, curr_s, learning_rate = 0.2, discount = 0.9):
+def update_table(reward, prev_s, prev_a, curr_s, learning_rate = 0.2, discount = 0.7):
     bellman = reward + discount * max(Q_TABLE[curr_s])
 
     Q_TABLE[prev_s][prev_a] += learning_rate * (bellman - Q_TABLE[prev_s][prev_a])
@@ -34,12 +37,12 @@ def extract_state(bit_state):
     plat_mask = 0b1111100
     direction_mask = 0b0000011
 
-    int_state = int(bit_state, 2)
+    int_state = int(bit_state, 2) #converte de binário pra decimal
     #aplica uma mascara de bits e faz um shift right pra que os bits fiquem no local correto
     platform = (int_state & plat_mask) >> 2
     direction = (int_state & direction_mask)
 
-    print('Bits: '+ bit_state + '\nPlataforma: ' + str(platform) + '\nDireção: ' + str(direction) + '\n')
+    print(f"Bits: {bit_state}  \nPlataforma:  {platform} \nDireção: {DIRECTIONS[direction]}\n")
 
     #acha o estado entre 0-95 a partir da direção e plataforma
     state = platform * 4 + direction
@@ -70,12 +73,12 @@ def navigate(socket):
 
 def explore(socket, times, start):
     #reseta o estado atual
-    current_state = start * 4
+    current_state = start * 4 # *4, pois cada plataforma tem 4 estados possíveis e sempre respawna virado pro norte
 
     for i in range(times):
-        print('Passo: ' +  str(i))
+        print('Passo: ' , i)
 
-        #busca na tabela a melhor ação o estado atual
+        #busca na tabela a melhor ação para o estado atual
         best_action = numpy.where(Q_TABLE[current_state] == max(Q_TABLE[current_state]))[0][0]
         rand_action = random.randint(0, 2)
 
