@@ -30,7 +30,6 @@ def compare_tables(best_actions, desired_best_actions):
                     desired_actions+=[aux]
                 else:
                     desired_actions.append(line.strip().replace(' ', '').replace('\n', ''))
-            print("desired_actions: ", desired_actions)
         try:
             with open(best_actions, 'r') as file:
                 lines = file.readlines()
@@ -39,7 +38,6 @@ def compare_tables(best_actions, desired_best_actions):
                     aux = lines[i].replace(' ', '').replace('\n', '')
                     if aux != desired_actions[i] or aux not in desired_actions[i]:
                         problem_lines.append(f"linha: {i} - {lines[i]} - {desired_actions[i]}")
-                        print("linha: ", i, " - ", lines[i], " - ", desired_actions[i])
                 numpy.savetxt('problem_lines.txt', problem_lines, fmt='%s')
                 print("problem lines saved!")
         except FileNotFoundError:
@@ -55,7 +53,8 @@ def load_table(location):
         print("Arquivo não encontrado, criando uma tabela vazia")
         table = load_empty_table()
 
-    print("table: ", table[0])
+    print("check if the table really was loaded: ")
+    print("table[0]: ", table[0])
     return table
 
 def load_empty_table():
