@@ -1,0 +1,96 @@
+jump
+left
+right / left
+right
+left
+left
+right
+jump
+jump
+right
+left / right
+left
+jump
+left
+right
+jump / right
+left
+right
+right
+jump
+jump
+left / right
+left
+right / jump
+left
+right
+right
+jump
+jump
+left
+right
+right / jump
+left
+right
+right
+jump
+left
+right
+right
+jump
+left
+left
+right
+jump
+right / left
+right
+jump
+left
+left / right
+right
+jump
+left
+left
+left
+right / jump
+jump
+jump
+left
+left
+right
+jump / right
+left
+left
+right
+jump
+left
+left
+right
+left
+right
+right
+jump
+left
+left
+right
+jump
+left
+left
+right
+jump
+left
+left
+right
+jump
+jump
+left
+left
+right
+jump
+left
+right
+right
+left
+right
+right
+jump

@@ -171,7 +171,7 @@ def main():
                     else:
                         save_best_action('best_actions.txt', Q_TABLE)
                 case 'compare tables':
-                    compare_tables('best_actions.txt', 'desired_best_actions_2.txt')
+                    compare_tables('best_actions.txt', 'desired_best_actions.txt')
                 case 'exit':
                     socket.close()
                     break
