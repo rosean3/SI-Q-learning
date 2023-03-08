@@ -119,11 +119,20 @@ def explore(socket, times, start):
         best_action = numpy.where(Q_TABLE[current_state] == max(Q_TABLE[current_state]))[0][0]
         rand_action = random.randint(0, 2)
 
-        #escolhe entre uma ação aleatória ou a melhor ação
+        # ---------------- # ! Lógicas de exploration x exploitation (ambas foram usadas) # ---------------------
+        # ? escolhe entre uma ação aleatório ou a melhor ação aleatoriamente a partir dos pesos
+        # if times>50:
+        #     weights = [i % (times/10), (times -1 - i) % (times/10)]
+        # else:
+        #     weights = [i, times - i]
+        # current_action = random.choices([best_action, rand_action], weights)[0]
+
+        # ? escolhe entre uma ação aleatória ou a melhor ação
         if i % 5 > 0:
             current_action = best_action
         else:
             current_action = rand_action
+        # ---------------- # ! Lógicas de exploration x exploitation (ambas foram usadas) # ---------------------
 
         #recebe a recompensa e o estado novos a partir da ação escolhida
         bit_state, reward  = cn.get_state_reward(socket, ACTIONS[current_action])
