@@ -109,7 +109,7 @@ def extract_state(bit_state: str):
     state = platform * 4 + direction
     return state
     
-def navigate(socket, times: int, start: int):
+def navigate(socket, times: int, start: int, isAuto: bool):
     """
     Navega pelo mapa usando a melhor ação de cada estado
 
@@ -122,7 +122,8 @@ def navigate(socket, times: int, start: int):
     current_state = start * 4
     total_reward = 0
 
-    for i in range(times):
+    i = 0
+    while True:
         #busca na tabela a melhor ação pra esse estado
         current_action = numpy.where(Q_TABLE[current_state] == max(Q_TABLE[current_state]))[0][0]
 
@@ -132,10 +133,20 @@ def navigate(socket, times: int, start: int):
 
         total_reward += reward
         current_state = new_state
-
+        
         print('Ação feita: ' + ACTIONS[current_action])
         print(f'Novo estado: {new_state}')
         print(f'Recompensa média: {round(total_reward/(i+1), 3)} \n')
+
+        i += 1
+        if isAuto:
+            if i >= times:
+                break
+        else:
+            #para de navegar se input for nao vazio
+            stop = input()
+            if(stop!=''):
+                break
 
 
 def explore(socket, times: int, start: int):
@@ -216,7 +227,7 @@ def main():
                         else:
                             explore(socket, times, start)
                             print('Exploração terminada')
-                case 'navigate':
+                case 'navigate auto':
                     if Q_TABLE is None:
                         print('Carregue uma Q_table antes')
                     else:
@@ -226,7 +237,20 @@ def main():
                         except ValueError:
                             print('Valor inválido')
                         else:
-                            navigate(socket, times, start)
+                            navigate(socket, times, start, True)
+                            print('Navegação terminada')
+                case 'navigate manual':
+                    if Q_TABLE is None:
+                        print('Carregue uma Q_table antes')
+                    else:
+                        try:
+                            start = int(input('Qual a plataforma inicial?\n'))
+                        except ValueError:
+                            print('Valor inválido')
+                        else:
+                            print('Pressione Enter para andar, digite algo para parar')
+                            navigate(socket, 0, start, False)
+                            print('Navegação terminada')
                 case 'compare tables':
                     compare_tables('best_actions.txt', 'desired_best_actions.txt')
 
@@ -235,7 +259,8 @@ def main():
                     print('empty: Carrega uma Q_table vazia\n')
                     print('load: Carrega a Q_table do arquivo de texto\n')
                     print('explore: Explora o mapa e atualiza a Q_table a partir das recompensas\n')
-                    print('navigate: Navega o mapa usando a melhor ação de cada estado\n')
+                    print('navigate auto: Navega o mapa automaticamente usando a melhor ação de cada estado\n')
+                    print('navigate manual: Navega o mapa toda vez que Enter é enviado usando a melhor ação de cada estado\n')
                     print('compare tables: Compara as melhores ações salvas com as melhores ações desejadas\n')
                     print('exit: Termina o programa')
                 case 'exit':
