@@ -9,6 +9,44 @@ Q_TABLE = None
 def save_table(location, table):
     numpy.savetxt(location, table)
 
+def save_best_action(location, table):
+    #salva a melhor ação para cada estado a partir da Q_table carregada
+    new_table = [numpy.argmax(row) for row in table]
+    best_actions = [ACTIONS[index] for index in new_table]
+    numpy.savetxt(location, best_actions, fmt='%s')
+    print("saved!")
+    
+def compare_tables(best_actions, desired_best_actions):
+    #compara a tabela de best actions salva com a tabela de desired best actions
+    try:
+        with open(desired_best_actions, 'r') as file:
+            lines = file.readlines()
+            desired_actions = []
+            for line in lines:
+                if '/' in line:
+                    aux = line.strip().split(' / ')
+                    for i in aux:
+                        i.replace(' ', '').replace('\n', '')
+                    desired_actions+=[aux]
+                else:
+                    desired_actions.append(line.strip().replace(' ', '').replace('\n', ''))
+            print("desired_actions: ", desired_actions)
+        try:
+            with open(best_actions, 'r') as file:
+                lines = file.readlines()
+                problem_lines = []
+                for i in range(len(lines)):
+                    aux = lines[i].replace(' ', '').replace('\n', '')
+                    if aux != desired_actions[i] or aux not in desired_actions[i]:
+                        problem_lines.append(f"linha: {i} - {lines[i]} - {desired_actions[i]}")
+                        print("linha: ", i, " - ", lines[i], " - ", desired_actions[i])
+                numpy.savetxt('problem_lines.txt', problem_lines, fmt='%s')
+                print("problem lines saved!")
+        except FileNotFoundError:
+            print("Arquivo best actions não encontrado")
+    except FileNotFoundError:
+        print("Arquivo desired actions não encontrado")
+        
 def load_table(location):
     try:
         with open(location) as file:
@@ -92,10 +130,6 @@ def explore(socket, times, start):
         bit_state, reward  = cn.get_state_reward(socket, ACTIONS[current_action])
         new_state = extract_state(bit_state)
 
-        #diminui a punicao caso caia da plataforma
-        if reward == -100: 
-            reward = -14
-
         update_table(reward, current_state, current_action, new_state)
 
         current_state = new_state
@@ -131,6 +165,13 @@ def main():
                     else:
                         print('Aperte Enter para avançar 1 passo, digite algo para terminar\n')
                         navigate(socket)
+                case 'save best action':
+                    if Q_TABLE is None:
+                        print('Carregue uma tabela antes')
+                    else:
+                        save_best_action('best_actions.txt', Q_TABLE)
+                case 'compare tables':
+                    compare_tables('best_actions.txt', 'desired_best_actions_2.txt')
                 case 'exit':
                     socket.close()
                     break
