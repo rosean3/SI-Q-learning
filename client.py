@@ -40,7 +40,9 @@ def compare_tables(best_actions, desired_best_actions):
                 for i in range(len(lines)):
                     aux = lines[i].replace(' ', '').replace('\n', '')
                     if aux != desired_actions[i] or aux not in desired_actions[i]:
-                        problem_lines.append(f"linha: {i} - {lines[i]} - {desired_actions[i]}")
+                        platform = int(i/4)
+                        direction = DIRECTIONS[i%4]
+                        problem_lines.append(f"linha do arquivo: {i+1} (platform {platform} {direction}) - {lines[i]} - should be: {desired_actions[i]}")
                 numpy.savetxt('problem_lines.txt', problem_lines, fmt='%s')
                 print("problem lines saved!")
         except FileNotFoundError:
