@@ -1,4 +1,7 @@
 # Qlearning
+## Link do executável (só disponível para pessoas do CIn)
+https://drive.google.com/drive/folders/1IqrgCxVFRhUetEj6r56vOBO2bKJhp1fh?usp=sharing
+
 ## Comandos:
 
 <b>save:</b> Salva a Q_table e suas melhores ações para cada estado nos arquivos de texto<br>
