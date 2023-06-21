@@ -1,6 +1,9 @@
 # Qlearning
-## Link do executável (só disponível para pessoas do CIn)
+## Link do executável (somente disponível para membros do CIn)
 https://drive.google.com/drive/folders/1IqrgCxVFRhUetEj6r56vOBO2bKJhp1fh?usp=sharing
+
+## Descrição do projeto (somente disponível para membros do CIn)
+https://docs.google.com/document/u/0/d/1p2_v_267D8kqCIE8rJ0UaQBOo1hdSPew/edit?fromCopy=true
 
 ## Comandos:
 
