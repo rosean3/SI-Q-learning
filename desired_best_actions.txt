@@ -2,40 +2,40 @@ jump
 left
 right / left
 right
-left
+left / jump
 left / right
-right
-jump
-jump
-right
+right / left
+jump / right
+jump / left / right
+right / left
 left / right / jump
-left
-jump
+left / right
+jump / left
 left
 right
 jump / right
 left
-right
+right / left
 right
 jump
-jump
+jump / left
 left / right
 left / right
 right / jump
-left
-right
-right
+left / right
+right / left
+right / jump
 jump
 jump
 left
-right
+right / left
 right / jump
 left
-left
+left / right
 right
 jump
 left
-left
+left / right
 right
 jump
 left
@@ -50,7 +50,7 @@ left / right
 right
 jump
 left
-left
+left / right
 left / right
 right / jump
 jump
@@ -59,6 +59,17 @@ left
 left / right
 right
 jump / right
+left / jump
+left / right
+right
+jump / right 
+left / jump
+left / right
+right
+left / right
+right / left / jump
+right / left
+jump
 left
 left / right
 right
@@ -66,31 +77,20 @@ jump
 left
 left / right
 right
+jump
+left
+left / right
+right
+jump
+jump
+left
+left / right
+right
+jump
 left
 right / left
 right
-jump
-left
-left / right
-right
-jump
-left
-left / right
-right
-jump
-left
-left
-right
-jump
-jump
-left
-left
-right
-jump
-left
-right
-right
-left
+left / jump
 left
 right
 jump
